@@ -1,0 +1,73 @@
+# Называем workflow
+name: pw test
+# Когда запускать тесты
+on:  
+  push:
+    branches: [main, graduation_project]
+  pull_request:
+    branches: [main, graduation_project]
+  workflow_dispatch:
+# Сама джобы
+jobs:
+  #название джобы
+  e2eTest:
+    timeout-minutes: 60
+    # задаем окружение
+    runs-on: ubuntu-latest
+    steps:
+    # делаем чекаут
+      - uses: actions/checkout@v4
+    # устанавливаем ноду
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+    # установим зависимоcти / npm ci
+      - run: npm i
+    # устанавливаем PW
+      - name: Install PW
+        run: npx playwright install --with-deps
+      - name: Run PW test
+        run: npm run test
+    # сохраняем отчет pw
+      - uses: actions/upload-artifact@v4
+        if: always()
+        continue-on-error: true
+        with:
+          name: test-results
+          path: test-results
+          retention-days: 20
+    # сохраняем отчет allure
+      - uses: actions/upload-artifact@v4
+        if: always()
+        continue-on-error: true
+        with:
+          name: allure-results
+          path: allure-results
+          retention-days: 20
+    # забираем результаты предыдущего запуска отчета allure
+      - uses: actions/checkout@v4
+        if: always()
+        continue-on-error: true
+        with:
+          ref: gh-pages
+          path: gh-pages
+    # Формируем из allure-results отчет allure-report
+      - uses: simple-elf/allure-report-action@master
+        if: always()
+        id: allure-report
+        with:
+          allure_results: allure-results
+          gh_pages: gh-pages
+          allure_report: allure-report
+          allure_history: allure-history
+          keep_reports: 20
+    
+    # Деплоим отчет
+      - name: Deploy report
+        if: always()
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: allure-history  # default: gh-pages
+ 
