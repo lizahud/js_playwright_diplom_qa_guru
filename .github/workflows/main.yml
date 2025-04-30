@@ -39,8 +39,6 @@ jobs:
     # устанавливаем PW
       - name: Install PW
         run: npx playwright install --with-deps
-      - name: Run PW test
-        run: npm run test
     # устанавливаем testOps CLI
       - name: Setup Allure TestOps CLI
         uses: allure-framework/setup-allurectl@v1
@@ -98,3 +96,16 @@ jobs:
           publish_branch: gh-pages
           publish_dir: allure-history  # default: gh-pages
  
+    # Установка Java для запуска JAR файлов
+      - name: Setup Java 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+    # Отправить уведомление в Telegram с помощью Allure-Notifications
+      - name: Send Telegram notification
+        run: |
+          export TELEGRAM_BOT_TOKEN=${{ secrets.TELEGRAM_BOT_TOKEN }}
+          export TELEGRAM_CHAT_ID=${{ secrets.TELEGRAM_CHAT_ID }}  
+          java -DconfigFile=notifications/telegram.json -jar notifications/allure-notifications-4.9.0.jar

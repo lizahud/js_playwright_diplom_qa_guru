@@ -1,0 +1,19 @@
+{
+    "base": {
+      "logo": "",
+      "project": "js_playwright_diplom_qa_guru",
+      "environment": "some env",
+      "comment": "some comment",
+      "reportLink": "",
+      "language": "ru",
+      "allureFolder": "allure-report",
+      "enableChart": true,
+      "enableSuitesPublishing": false,
+      "customData": {}
+    },
+    "telegram": {
+      "token": "7564203642:AAHEvRJs27pArJNHaA3zmjXRi2Z-wP5VZ0o",
+      "chat": "-4711281957",
+      "replyTo": ""
+    }
+  }
