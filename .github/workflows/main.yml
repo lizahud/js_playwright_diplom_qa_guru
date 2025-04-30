@@ -107,7 +107,5 @@ jobs:
       - name: Send Telegram notification
         run: |
           export TELEGRAM_BOT_TOKEN=${{ secrets.TELEGRAM_BOT_TOKEN }}
-          export TELEGRAM_CHAT_ID=${{ secrets.TELEGRAM_CHAT_ID }}
-          npm install -g allure-commandline
-          allure generate allure-results --clean   
+          export TELEGRAM_CHAT_ID=${{ secrets.TELEGRAM_CHAT_ID }}  
           java -DconfigFile=notifications/telegram.json -jar notifications/allure-notifications-4.9.0.jar

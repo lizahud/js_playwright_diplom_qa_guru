@@ -12,8 +12,8 @@
       "customData": {}
     },
     "telegram": {
-      "token": "$TELEGRAM_BOT_TOKEN",
-      "chat": "$TELEGRAM_CHAT_ID",
+      "token": "7564203642:AAHEvRJs27pArJNHaA3zmjXRi2Z-wP5VZ0o",
+      "chat": "-4711281957",
       "replyTo": ""
     }
   }
