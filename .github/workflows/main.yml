@@ -7,6 +7,19 @@ on:
   pull_request:
     branches: [main, graduation_project]
   workflow_dispatch:
+      inputs:
+      ALLURE_JOB_RUN_ID:
+        description: ALLURE_JOB_RUN_ID service parameter. Leave blank.
+      ALLURE_USERNAME:
+        description: ALLURE_USERNAME service parameter. Leave blank.
+
+env:
+  ALLURE_TOKEN: ${{ secrets.ALLURE_TOKEN }}
+  ALLURE_JOB_RUN_ID: ${{ github.event.inputs.ALLURE_JOB_RUN_ID }}
+  ALLURE_ENDPOINT: https://allure.autotests.cloud/
+  ALLURE_PROJECT_ID: 4738
+  ALLURE_RESULTS: ./allure-results
+
 # Сама джобы
 jobs:
   #название джобы
@@ -28,6 +41,20 @@ jobs:
         run: npx playwright install --with-deps
       - name: Run PW test
         run: npm run test
+    # устанавливаем testOps CLI
+      - name: Setup Allure TestOps CLI
+        uses: allure-framework/setup-allurectl@v1
+        with:
+          allure-endpoint: ${{ secrets.ALLURE_ENDPOINT }}
+          allure-token: ${{ secrets.ALLURE_TOKEN }}
+          allure-project-id: ${{ secrets.ALLURE_PROJECT_ID }}
+    # запускаем вотчер allurectl и собираем результаты в allure-results
+      - name: Run Playwright tests and upload to Allure TestOps
+        run: |
+          allurectl watch -- npx playwright test
+        env:
+          # Путь к папке с результатами Allure
+          ALLURE_RESULTS: './allure-results'
     # сохраняем отчет pw
       - uses: actions/upload-artifact@v4
         if: always()
