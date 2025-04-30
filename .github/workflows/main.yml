@@ -108,6 +108,7 @@ jobs:
         run: |
           export TELEGRAM_BOT_TOKEN=${{ secrets.TELEGRAM_BOT_TOKEN }}
           export TELEGRAM_CHAT_ID=${{ secrets.TELEGRAM_CHAT_ID }}
-          sudo dpkg -i allure_2.29.0-1_all.deb
+          sudo apt-get update
+          sudo apt-get install -y allure
           allure generate allure-results --clean   
           java -DconfigFile=notifications/telegram.json -jar notifications/allure-notifications-4.9.0.jar
