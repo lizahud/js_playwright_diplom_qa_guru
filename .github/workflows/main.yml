@@ -108,4 +108,5 @@ jobs:
         run: |
           export TELEGRAM_BOT_TOKEN=${{ secrets.TELEGRAM_BOT_TOKEN }}
           export TELEGRAM_CHAT_ID=${{ secrets.TELEGRAM_CHAT_ID }}
+          allure generate allure-results --clean   
           java -DconfigFile=notifications/telegram.json -jar notifications/allure-notifications-4.9.0.jar
