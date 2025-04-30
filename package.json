@@ -1,0 +1,32 @@
+{
+  "name": "js_playwright_diplom_qa_guru",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx playwright test",
+    "ui": "npx playwright test --ui",
+    "reportAwesome": "npx allure awesome ./allure-results --single-file",
+    "reportClassic": "npx allure classic ./allure-results --single-file"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lizahud/js_playwright_diplom_qa_guru.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lizahud/js_playwright_diplom_qa_guru/issues"
+  },
+  "homepage": "https://github.com/lizahud/js_playwright_diplom_qa_guru#readme",
+  "devDependencies": {
+    "@faker-js/faker": "^9.7.0",
+    "@playwright/test": "^1.52.0",
+    "@types/node": "^22.15.3"
+  },
+  "dependencies": {
+    "allure": "^3.0.0-beta.12",
+    "allure-playwright": "^3.2.1"
+  }
+}
