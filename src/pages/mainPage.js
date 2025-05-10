@@ -10,8 +10,8 @@ export class MainPage {
 		this.crashBugOverlay = page.locator('html');
 		this.firstBugOverlay = page.locator('#popmake-4406');
 	}
-    async open(url) {
-		await this.page.goto(url);
+	async open() {
+		await this.page.goto('.');
 		await this.page.reload();
 	}
     async clickNextPaginationPage() {
