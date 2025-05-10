@@ -1,65 +1,52 @@
 import * as allure from 'allure-js-commons';
-import { test, expect } from '@playwright/test';
-import { CommentBuilder } from '../page_object/helpers/builder/index';
-import { App } from '../page_object/pages/appPage';
+import { expect } from '@playwright/test';
+import { test } from '../src/helpers/fixture/index';
+import { CommentBuilder } from '../src/helpers/builder/index';
 
 
-const URL_UI = 'https://academybugs.com/find-bugs/';
 const BUG_ERROR_MESSAGE = 'What did you find out?';
 const CRASH_BUG_ERROR_MESSAGE = 'You found a crash bug, examine the page';
 const FIRST_BUG_ERROR_MESSAGE = '#1 Awesome! You found a bug. Pretty easy right?'
-let app;
 
 
 test.describe('Тесты в рамках ДЗ №16 по academybugs', () => {
 
-	test.beforeEach(async ({ page }) => {
-    app = new App(page);
-		await app.main.open(URL_UI);
+	test.beforeEach(async ({ webApp }) => {
+    await webApp.main.open();
 	});
 
-  test('Выбранное количество результатов отображается в соответствии с нажатыми кнопками.', async ({ page }) => {
+  test('Выбранное количество результатов отображается в соответствии с нажатыми кнопками.', async ({ webApp }) => {
     await allure.tags('mainPage');
 
-    app = new App(page);
-
-    await app.main.clickNextPaginationPage();
-    await expect(app.main.bugOverlay).toContainText(CRASH_BUG_ERROR_MESSAGE);
+    await webApp.main.clickNextPaginationPage();
+    await expect(webApp.main.bugOverlay).toContainText(CRASH_BUG_ERROR_MESSAGE);
   });
 
-  test('Изображение продукта полностью заполняет поле, как и все остальные изображения продуктов.', async ({ page }) => {
+  test('Изображение продукта полностью заполняет поле, как и все остальные изображения продуктов.', async ({ webApp }) => {
     await allure.tags('mainPage');
 
-    app = new App(page);
-
-    await app.main.clickImageProduct();
-    await expect(app.main.bugPopup).toContainText(BUG_ERROR_MESSAGE);
+    await webApp.main.clickImageProduct();
+    await expect(webApp.main.bugPopup).toContainText(BUG_ERROR_MESSAGE);
   });
 
-  test('Краткое описание и описание продукта на английском языке.', async ({ page }) => {
+  test('Краткое описание и описание продукта на английском языке.', async ({ webApp }) => {
     await allure.tags('productPage');
 
-    app = new App(page);
-
-    await app.main.gotoSelectOptions();
-    await app.product.clickDescriptionDetails();
-    await expect(app.main.bugPopup).toContainText(BUG_ERROR_MESSAGE);
+    await webApp.main.gotoSelectOptions();
+    await webApp.product.clickDescriptionDetails();
+    await expect(webApp.main.bugPopup).toContainText(BUG_ERROR_MESSAGE);
   });
 
-  test('Желтый и оранжевый цвета написаны правильно.', async ({ page }) => {
+  test('Желтый и оранжевый цвета написаны правильно.', async ({ webApp }) => {
     await allure.tags('productPage');
 
-    app = new App(page);
-
-    await app.main.gotoSelectOptions();
-    await app.product.chooseOrangProductColor();
-    await expect(app.main.bugPopup).toContainText(BUG_ERROR_MESSAGE);
+    await webApp.main.gotoSelectOptions();
+    await webApp.product.chooseOrangProductColor();
+    await expect(webApp.main.bugPopup).toContainText(BUG_ERROR_MESSAGE);
   });
 
-  test('Комментарий размещается под продуктом.', async ({ page }) => {
+  test('Комментарий размещается под продуктом.', async ({ webApp }) => {
     await allure.tags('productPage');
-
-    app = new App(page);
 
     const commentData = new CommentBuilder()
     .addComment()
@@ -68,78 +55,64 @@ test.describe('Тесты в рамках ДЗ №16 по academybugs', () => {
     .addWebsite()
     .generateCommentData();
 
-    await app.main.gotoSelectOptions();
-    await app.product.createComment(commentData.comment, commentData.name, commentData.email, commentData.website)
-    await expect(app.main.crashBugOverlay).toContainText(CRASH_BUG_ERROR_MESSAGE);
+    await webApp.main.gotoSelectOptions();
+    await webApp.product.createComment(commentData.comment, commentData.name, commentData.email, commentData.website)
+    await expect(webApp.main.crashBugOverlay).toContainText(CRASH_BUG_ERROR_MESSAGE);
   });
 
-  test('Ссылка на производителя показывает соответствующую страницу.', async ({ page }) => {
+  test('Ссылка на производителя показывает соответствующую страницу.', async ({ webApp }) => {
     await allure.tags('productPage');
 
-    app = new App(page);
-
-    await app.main.gotoSelectOptions();
-    await app.product.clickManufacturerDetails();
-    await expect(app.main.bugPopup).toContainText(BUG_ERROR_MESSAGE);
+    await webApp.main.gotoSelectOptions();
+    await webApp.product.clickManufacturerDetails();
+    await expect(webApp.main.bugPopup).toContainText(BUG_ERROR_MESSAGE);
   });
 
-  test('Значок Twitter должен перенаправлять пользователя в Twitter.', async ({ page }) => {
+  test('Значок Twitter должен перенаправлять пользователя в Twitter.', async ({ webApp }) => {
     await allure.tags('productPage');
 
-    app = new App(page);
-
-    await app.main.gotoSelectOptions();
-    await app.product.clickXIcon();
-    await expect(app.main.bugPopup).toContainText(BUG_ERROR_MESSAGE);
+    await webApp.main.gotoSelectOptions();
+    await webApp.product.clickXIcon();
+    await expect(webApp.main.bugPopup).toContainText(BUG_ERROR_MESSAGE);
   });
 
-  test('Валюта изменена, как и ожидалось.', async ({ page }) => {
+  test('Валюта изменена, как и ожидалось.', async ({ webApp }) => {
     await allure.tags('productPage');
 
-    app = new App(page);
-
-    await app.main.gotoSelectOptions();
-    await app.product.selectEurCurrency();
-    await expect(app.main.crashBugOverlay).toContainText(CRASH_BUG_ERROR_MESSAGE);
+    await webApp.main.gotoSelectOptions();
+    await webApp.product.selectEurCurrency();
+    await expect(webApp.main.crashBugOverlay).toContainText(CRASH_BUG_ERROR_MESSAGE);
   });
 
-  test('Отображается список товаров в выбранном ценовом диапазоне.', async ({ page }) => {
+  test('Отображается список товаров в выбранном ценовом диапазоне.', async ({ webApp }) => {
     await allure.tags('productPage');
 
-    app = new App(page);
-
-    await app.main.gotoSelectOptions();
-    await app.product.clickFilterBySmallPrice();
-    await expect(app.main.bugPopup).toContainText(BUG_ERROR_MESSAGE);
+    await webApp.main.gotoSelectOptions();
+    await webApp.product.clickFilterBySmallPrice();
+    await expect(webApp.main.bugPopup).toContainText(BUG_ERROR_MESSAGE);
   });
 
-  test('Надпись кнопки «Войти» располагается по центру вертикально.', async ({ page }) => {
+  test('Надпись кнопки «Войти» располагается по центру вертикально.', async ({ webApp }) => {
     await allure.tags('accountPage');
 
-    app = new App(page);
-
-    await app.main.gotoLoginForPricing();
-    await app.account.clickAccountSignInButton();
-    await expect(app.main.firstBugOverlay).toContainText(FIRST_BUG_ERROR_MESSAGE);
+    await webApp.main.gotoLoginForPricing();
+    await webApp.account.clickAccountSignInButton();
+    await expect(webApp.main.firstBugOverlay).toContainText(FIRST_BUG_ERROR_MESSAGE);
   });
 
-  test('Текст в разделе «Новый пользователь» на английском языке.', async ({ page }) => {
+  test('Текст в разделе «Новый пользователь» на английском языке.', async ({ webApp }) => {
     await allure.tags('accountPage');
 
-    app = new App(page);
-
-    await app.main.gotoLoginForPricing();
-    await app.account.clickAccountSubheader();
-    await expect(app.main.bugPopup).toContainText(BUG_ERROR_MESSAGE);
+    await webApp.main.gotoLoginForPricing();
+    await webApp.account.clickAccountSubheader();
+    await expect(webApp.main.bugPopup).toContainText(BUG_ERROR_MESSAGE);
   });
 
-  test('Заголовок поля пароля выравнивается так же, как и поле выше.', async ({ page }) => {
+  test('Заголовок поля пароля выравнивается так же, как и поле выше.', async ({ webApp }) => {
     await allure.tags('accountPage');
 
-    app = new App(page);
-
-    await app.main.gotoLoginForPricing();
-    await app.account.clickAccountPasswordLabel();
-    await expect(app.main.bugPopup).toContainText(BUG_ERROR_MESSAGE);
+    await webApp.main.gotoLoginForPricing();
+    await webApp.account.clickAccountPasswordLabel();
+    await expect(webApp.main.bugPopup).toContainText(BUG_ERROR_MESSAGE);
   });
 });
