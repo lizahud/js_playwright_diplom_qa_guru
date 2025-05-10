@@ -34,4 +34,4 @@
 ![alt text](<images_report/2025-05-01_01-39-38.png>)
 
 ## Уведомления в Telegram
-![alt text](<images_report/IMG_2844.png>)
+![alt text](<images_report/2025-05-11_02-48-04.png>)
