@@ -27,11 +27,11 @@
 
 ## Пример Allure-отчета
 [Ссылка на отчет](https://lizahud.github.io/js_playwright_diplom_qa_guru)
-![alt text](<images_report/2025-05-01_01-38-09.png>)
+![alt text](<images_report/2025-05-12_12-33-41.png>)
 
 ## Интеграция с TestOps
-[Ссылка на отчет](https://allure.autotests.cloud/project/4738/dashboards)
-![alt text](<images_report/2025-05-01_01-39-38.png>)
+[Ссылка на отчет](https://allure.autotests.cloud/launch/46358/?treeId=0)
+![alt text](<images_report/2025-05-12_12-34-22.png>)
 
 ## Уведомления в Telegram
 ![alt text](<images_report/2025-05-11_02-48-04.png>)
