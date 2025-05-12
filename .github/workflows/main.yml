@@ -2,8 +2,6 @@
 name: pw test
 # Когда запускать тесты
 on:  
-  push:
-    branches: [main, graduation_project]
   pull_request:
     branches: [main, graduation_project]
   workflow_dispatch:
